@@ -1,4 +1,6 @@
-$def with (torrents)
+$def with (status)
 
-$for torrent in torrents:
-    <div>$:torrent</div>
+$for id, torrent in status['torrents'].iteritems():
+    <div>
+        <a href="/$:id">$:torrent['name']</a>
+    </div>

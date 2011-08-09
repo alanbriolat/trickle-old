@@ -1,0 +1,17 @@
+$def with (torrent, files)
+
+$def print_directory(directory):
+    <ul>
+    $for name, info in directory.iteritems():
+        <li>$:name
+        $if 'contents' in info:
+            $:print_directory(info['contents'])
+        </li>
+    </ul>
+
+<div>
+    $:torrent
+</div>
+<div>
+    $:print_directory(files['contents'])
+</div>
