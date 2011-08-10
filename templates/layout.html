@@ -3,9 +3,12 @@ $def with (content)
 <html>
     <head>
         <title>Trickle - A simple Deluge Web UI</title>
-        <style type="text/css">
-body {}
-        </style>
+        <link rel="stylesheet/less" type="text/css" href="/static/style.less" />
+        <script type="text/javascript" src="/static/less-1.1.3.min.js"></script>
+        <script type="text/javascript">
+            less.env = "development";
+            less.watch();
+        </script>
     </head>
     <body>
 $:content

@@ -6,26 +6,36 @@ from web import form
 from trickle.delugeclient import DelugeClient
 
 urls = (
-    '/',    'index',
-    '/([0-9a-f]+)', 'torrentinfo',
+    '/', 'index',
+    '/torrent/([0-9a-f]+)', 'torrentinfo',
 )
 
 app = web.application(urls, globals(), autoreload=False)
 application = app.wsgifunc()
-render = web.template.render('templates/', base='layout')
+from trickle.templates import render
 
 client = None
 
 
 TORRENT_KEYS = []
+SORT_SCHEMES = {
+    'added_asc': ('time_added', False),
+    'added_desc': ('time_added', True),
+}
+
+def sort_torrents(torrents, sort_order):
+    field, reverse = sort_order
+    return sorted(torrents, key=lambda t: t[field], reverse=reverse)
 
 
 class index:
     def GET(self):
         client.keepalive()
         status = client.web.update_ui(TORRENT_KEYS, {})
+        sort_order = SORT_SCHEMES.get(web.ctx.query[1:], SORT_SCHEMES['added_desc'])
+        torrents = sort_torrents(status['torrents'].values(), sort_order)
         print status
-        return render.index(status)
+        return render.index(status, torrents)
 
 
 class torrentinfo:

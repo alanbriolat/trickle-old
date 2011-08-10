@@ -1,6 +1,19 @@
-$def with (status)
+$def with (status, torrents)
 
-$for id, torrent in status['torrents'].iteritems():
-    <div>
-        <a href="/$:id">$:torrent['name']</a>
+$for torrent in torrents:
+    <div id="torrent-$torrent['hash']" class="torrent state-$torrent['state'].lower() row-$loop.parity">
+        <div class="progressbar" style="width: $torrent['progress']%;">&nbsp;</div>
+        <div class="content">
+            <a class="torrent-name" href="/torrent/$torrent['hash']">$torrent['name']</a>
+            <span class="torrent-info">
+                <span>
+                $torrent['state']
+                $if torrent['state'] == 'Seeding':
+                    ($("%.2f" % torrent['ratio']))
+                $else:
+                    ($("%.0f" % torrent['progress'])%)
+                </span>
+            </span>
+            <div style="clear: both;"></div>
+        </div>
     </div>

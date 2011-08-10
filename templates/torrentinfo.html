@@ -1,17 +1,21 @@
 $def with (torrent, files)
 
-$def print_directory(directory):
+$def print_directory(filetree):
     <ul>
-    $for name, info in directory.iteritems():
-        <li>$:name
+    $for name, info in iterdirs(filetree):
+        <li>$name
         $if 'contents' in info:
             $:print_directory(info['contents'])
         </li>
+    $for name, info in iterfiles(filetree):
+        <li>$name</li>
     </ul>
 
+<h1>Details: $torrent['name']</h1>
 <div>
     $:torrent
 </div>
 <div>
     $:print_directory(files['contents'])
 </div>
+<div>$files</div>
