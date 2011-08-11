@@ -1,19 +1,81 @@
 $def with (status, torrents)
 
+<div id="header">
+    <span class="stats">
+        $ state = dict(status['filters']['state'])
+        <span title="Torrent count" class="hasicon" style="$:icon_css('folder')">
+            $state['All']&nbsp;</span>
+        <span title="Active" class="hasicon" style="$:icon_css('gear')">
+            $state['Active']&nbsp;</span>
+        <span title="Downloading" class="hasicon" style="$:icon_css('arrow-transition-270')">
+            $state['Downloading']&nbsp;</span>
+        <span title="Seeding" class="hasicon" style="$:icon_css('arrow-transition-090')">
+            $state['Seeding']&nbsp;</span>
+        <span title="Paused" class="hasicon" style="$:icon_css('control-pause')">
+            $state['Paused']&nbsp;</span>
+        <span title="Queued" class="hasicon" style="$:icon_css('ui-paginator')">
+            $state['Queued']&nbsp;</span>
+        $if state['Checking']:
+            <span title="Checking" class="hasicon" style="$:icon_css('arrow-circle-135')">
+                $state['Checking']&nbsp;</span>
+        $if state['Error']:
+            <span title="Error" class="hasicon" style="$:icon_css('exclamation')">
+                $state['Error']&nbsp;</span>
+        <span title="Free space" class="hasicon" style="$:icon_css('drive')">
+            $si_size(status['stats']['free_space'])</span>
+    </span>
+    <span class="options">
+        <span>Select: <a href="#">All</a> / <a href="#">None</a> / <a href="#">Inverse</a></span>
+        &nbsp;&bull;&nbsp;
+        Sort by: <select>
+            <option>Name (ascending)</option>
+            <option>Name (descending)</option>
+            <option selected>Added (ascending)</option>
+            <option>Added (descending)</option>
+        </select>
+    </span>
+    <div style="clear: both;"></div>
+</div>
+
+<div id="body">
 $for torrent in torrents:
     <div id="torrent-$torrent['hash']" class="torrent state-$torrent['state'].lower() row-$loop.parity">
         <div class="progressbar" style="width: $torrent['progress']%;">&nbsp;</div>
         <div class="content">
-            <a class="torrent-name" href="/torrent/$torrent['hash']">$torrent['name']</a>
+            <span class="torrent-name">
+                <input type="checkbox" name="torrents[]" value="$torrent['hash']" />&nbsp;
+                <a href="/torrent/$torrent['hash']">$torrent['name']</a>
+            </span>
             <span class="torrent-info">
                 <span>
-                $torrent['state']
-                $if torrent['state'] == 'Seeding':
-                    ($("%.2f" % torrent['ratio']))
-                $else:
-                    ($("%.0f" % torrent['progress'])%)
+                    <span class="hasicon" style="$:icon_css('size')" title="Total size">
+                        $si_size(torrent['total_size'])
+                    </span>
+                    <span class="hasicon" style="$:icon_css('status')" title="Status">
+                    $torrent['state']
+                    $if torrent['state'] == 'Seeding':
+                        ($("%.2f" % torrent['ratio']))
+                    $else:
+                        ($("%.0f" % torrent['progress'])%)
+                    </span>
+                </span>
+                <span>
+                    <span class="hasicon" style="$:icon_css('servers-network')" title="Seeders / leechers">
+                        $torrent['num_seeds'] ($torrent['total_seeds'])
+                        / $torrent['num_peers'] ($torrent['total_peers'])
+                    </span>
+                </span>
+                <span>
+                    <span class="hasicon" style="$:icon_css('arrow-transition-270')" title="Download rate">
+                        $si_size(torrent['download_payload_rate'])/s
+                    </span>
+                    <span class="hasicon" style="$:icon_css('arrow-transition-090')" title="Upload rate">
+                        $si_size(torrent['upload_payload_rate'])/s
+                    </span>
                 </span>
             </span>
             <div style="clear: both;"></div>
         </div>
     </div>
+
+</div>

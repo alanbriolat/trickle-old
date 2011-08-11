@@ -1,4 +1,6 @@
 import sys
+import pprint
+pp = pprint.PrettyPrinter(indent=2)
 
 import web
 from web import form
@@ -34,7 +36,7 @@ class index:
         status = client.web.update_ui(TORRENT_KEYS, {})
         sort_order = SORT_SCHEMES.get(web.ctx.query[1:], SORT_SCHEMES['added_desc'])
         torrents = sort_torrents(status['torrents'].values(), sort_order)
-        print status
+        #pp.pprint(status)
         return render.index(status, torrents)
 
 

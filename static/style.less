@@ -1,6 +1,14 @@
-@downloading: #5f4;
-@seeding: #59f;
-@paused: #999;
+/*
+ * Constant definitions
+ */
+
+@downloading:   #5f4;
+@seeding:       #59f;
+@paused:        #999;
+
+/*
+ * Mixins
+ */
 
 .rounded_corners (@radius: 3px) {
     -moz-border-radius: @radius;
@@ -15,13 +23,85 @@
     }
 }
 
+/*
+ * General styles
+ */
+
 body {
     font-family: sans-serif;
     font-size: 76%;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #555;
+    font-weight: bold;
+    text-decoration: none;
+
+    &:hover {
+        color: #000;
+    }
+}
+
+input[type="checkbox"] {
+    padding: 0;
+    margin: 0;
+    vertical-align: text-bottom;
+}
+
+img.icon {
+    vertical-align: text-bottom;
+}
+
+.hasicon {
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 20px;
 }
 
 .row-even {
     /*background-color: #eee;*/
+}
+
+/*
+ * Specific element styles
+ */
+
+div#header {
+    position: relative;
+    /*position: fixed;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    width: 100%;*/
+    line-height: 40px;
+    background-color: #333;
+    color: #fff;
+    padding: 0 0px;
+
+    .stats {
+        float: right;
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    .options {
+        float: left;
+        margin-left: 10px;
+        font-weight: bold;
+
+        a {
+            color: #fff;
+            font-weight: normal;
+        }
+    }
+}
+
+div#body {
+    /*margin-top: 50px;*/
+    margin: 10px;
 }
 
 .torrent {
@@ -39,7 +119,7 @@ body {
 
     .content {
         position: relative;
-        z-index: 99;
+        z-index: 1;
         padding: 5px 7px;
     }
 
@@ -74,9 +154,11 @@ body {
     .torrent-info {
         float: right;
         
+        >span >span {
+            display: inline-block;
+        }
+
         span {
-            width: 120px;
-            margin-left: 10px;
             display: inline-block;
         }
     }
