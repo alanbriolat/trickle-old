@@ -2,9 +2,10 @@
  * Constant definitions
  */
 
-@downloading:   #5f4;
+@downloading:   #5e4;
 @seeding:       #59f;
 @paused:        #999;
+@queued:        #9c9;
 
 /*
  * Mixins
@@ -107,7 +108,7 @@ div#body {
 .torrent {
     position: relative;
     border: 1px solid;
-    border-left-width: 5px;
+    border-left-width: 10px;
     margin: 5px 0;
 
     .progressbar {
@@ -123,28 +124,16 @@ div#body {
         padding: 5px 7px;
     }
 
-    &.state-downloading {
-        .torrent-progress-bar(@downloading);
-    }
-
-    &.state-seeding {
-        .torrent-progress-bar(@seeding);
-    }
-
-    &.state-paused {
-        .torrent-progress-bar(@paused);
-    }
+    &.state-downloading { .torrent-progress-bar(@downloading); }
+    &.state-seeding { .torrent-progress-bar(@seeding); }
+    &.state-paused { .torrent-progress-bar(@paused); }
+    &.state-queued { .torrent-progress-bar(@queued); }
 
     &:hover {
-        &.state-downloading {
-            .torrent-progress-bar(darken(@downloading, 10%));
-        }
-        &.state-seeding {
-            .torrent-progress-bar(darken(@seeding, 10%));
-        }
-        &.state-paused {
-            .torrent-progress-bar(darken(@paused, 10%));
-        }
+        &.state-downloading { .torrent-progress-bar(darken(@downloading, 10%)); }
+        &.state-seeding { .torrent-progress-bar(darken(@seeding, 10%)); }
+        &.state-paused { .torrent-progress-bar(darken(@paused, 10%)); }
+        &.state-queued { .torrent-progress-bar(darken(@queued, 10%)); }
     }
 
     .torrent-name {

@@ -53,5 +53,15 @@ def icon_css(i):
     """Generate CSS style information for an icon as a background image."""
     return 'background-image: url(/static/icons/%s.png);' % (i,)
 
+@register
+def status_icon_css(status):
+    ICONS = {'Downloading': 'arrow-in',
+             'Seeding': 'arrow-out',
+             'Paused': 'control-pause',
+             'Queued': 'ui-paginator',
+             'Checking': 'arrow-circle-135',
+             'Error': 'exclamation'}
+    return icon_css(ICONS.get(status, 'none'))
+
 # Create a template renderer with these template functions available
 render = web.template.render('templates/', base='layout', globals=template_functions)

@@ -3,6 +3,11 @@ $def with (status, torrents)
 <div id="header">
     <span class="stats">
         $ state = dict(status['filters']['state'])
+        $ stats = status['stats']
+        <span title="Total download rate" class="hasicon" style="$:icon_css('drive-download')">
+            $si_size(stats['download_rate'])/s&nbsp;</span>
+        <span title="Total upload rate" class="hasicon" style="$:icon_css('drive-upload')">
+            $si_size(stats['upload_rate'])/s&nbsp;</span>
         <span title="Torrent count" class="hasicon" style="$:icon_css('folder')">
             $state['All']&nbsp;</span>
         <span title="Active" class="hasicon" style="$:icon_css('gear')">
@@ -48,10 +53,10 @@ $for torrent in torrents:
             </span>
             <span class="torrent-info">
                 <span>
-                    <span class="hasicon" style="$:icon_css('size')" title="Total size">
+                    <span class="hasicon" style="$:icon_css('drive') width: 70px;" title="Total size">
                         $si_size(torrent['total_size'])
                     </span>
-                    <span class="hasicon" style="$:icon_css('status')" title="Status">
+                    <span class="hasicon" style="$:status_icon_css(torrent['state']) width: 140px;" title="Status">
                     $torrent['state']
                     $if torrent['state'] == 'Seeding':
                         ($("%.2f" % torrent['ratio']))
@@ -60,16 +65,18 @@ $for torrent in torrents:
                     </span>
                 </span>
                 <span>
-                    <span class="hasicon" style="$:icon_css('servers-network')" title="Seeders / leechers">
+                    <span class="hasicon" style="$:icon_css('servers-network') width: 70px;" title="Seeders">
                         $torrent['num_seeds'] ($torrent['total_seeds'])
-                        / $torrent['num_peers'] ($torrent['total_peers'])
+                    </span>
+                    <span class="hasicon" style="$:icon_css('network-cloud') width: 70px;" title="Leechers">
+                        $torrent['num_peers'] ($torrent['total_peers'])
                     </span>
                 </span>
                 <span>
-                    <span class="hasicon" style="$:icon_css('arrow-transition-270')" title="Download rate">
+                    <span class="hasicon" style="$:icon_css('arrow-transition-270') width: 70px;" title="Download rate">
                         $si_size(torrent['download_payload_rate'])/s
                     </span>
-                    <span class="hasicon" style="$:icon_css('arrow-transition-090')" title="Upload rate">
+                    <span class="hasicon" style="$:icon_css('arrow-transition-090') width: 70px;" title="Upload rate">
                         $si_size(torrent['upload_payload_rate'])/s
                     </span>
                 </span>
