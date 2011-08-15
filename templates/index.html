@@ -49,7 +49,7 @@ $for torrent in torrents:
         <div class="content">
             <span class="torrent-name">
                 <input type="checkbox" name="torrents[]" value="$torrent['hash']" />&nbsp;
-                <a href="/torrent/$torrent['hash']">$torrent['name']</a>
+                <a href="$:url('/torrent/'+torrent['hash'])">$torrent['name']</a>
             </span>
             <span class="torrent-info">
                 <span>

@@ -2,11 +2,13 @@ import re
 
 import web
 
-# Available template functions
-template_functions = dict()
+# Available template functions, with some things pre-registered
+template_functions = {'url': web.url}
 
 def register(f):
     """Register a function as a template function, keeping its name."""
+    if f.__name__ in template_functions:
+        raise KeyError('Template function %s already registered' % (f.__name__,))
     template_functions[f.__name__] = f
     return f
 
@@ -46,12 +48,14 @@ def si_size(b):
 def icon(i, alt=None):
     """Output a named icon image, with alt text defaulting to the icon name."""
     alt = alt or i
-    return '<img class="icon" src="/static/icons/%s.png" alt="%s"/>' % (i, alt)
+    url = web.url('/static/icons/%s.png' % (i,))
+    return '<img class="icon" src="'+url+'" alt="'+alt+'"/>'
 
 @register
 def icon_css(i):
     """Generate CSS style information for an icon as a background image."""
-    return 'background-image: url(/static/icons/%s.png);' % (i,)
+    url = web.url('/static/icons/%s.png' % (i,))
+    return 'background-image: url('+url+');'
 
 @register
 def status_icon_css(status):
