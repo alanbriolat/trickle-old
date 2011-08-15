@@ -1,3 +1,0 @@
-[submodule "jsonrpclib"]
-	path = jsonrpclib
-	url = git@github.com:alanbriolat/jsonrpclib.git

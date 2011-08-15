@@ -1,11 +1,10 @@
-import jsonrpclib
+from trickle.jsonrpc import ServerProxy
 
 
-class DelugeClient(jsonrpclib.Server):
+class DelugeClient(ServerProxy):
     def __init__(self, host='localhost', port=8112, password='deluge'):
         self._password = password
-        jsonrpclib.config.version = 1.0
-        jsonrpclib.Server.__init__(self, 'http://%s:%s/json' % (host, port))
+        super(DelugeClient, self).__init__('http://%s:%s/json' % (host, port))
         self.auth.login(self._password)
 
     def keepalive(self):
