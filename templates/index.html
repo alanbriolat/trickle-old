@@ -4,17 +4,17 @@ $def with (status, torrents)
     <span class="stats">
         $ state = dict(status['filters']['state'])
         $ stats = status['stats']
-        <span title="Total download rate" class="hasicon" style="$:icon_css('drive-download')">
+        <span title="Total download rate" class="hasicon" style="$:icon_css('arrow-transition-270')">
             $si_size(stats['download_rate'])/s&nbsp;</span>
-        <span title="Total upload rate" class="hasicon" style="$:icon_css('drive-upload')">
+        <span title="Total upload rate" class="hasicon" style="$:icon_css('arrow-transition-090')">
             $si_size(stats['upload_rate'])/s&nbsp;</span>
         <span title="Torrent count" class="hasicon" style="$:icon_css('folder')">
             $state['All']&nbsp;</span>
         <span title="Active" class="hasicon" style="$:icon_css('gear')">
             $state['Active']&nbsp;</span>
-        <span title="Downloading" class="hasicon" style="$:icon_css('arrow-transition-270')">
+        <span title="Downloading" class="hasicon" style="$:icon_css('drive-download')">
             $state['Downloading']&nbsp;</span>
-        <span title="Seeding" class="hasicon" style="$:icon_css('arrow-transition-090')">
+        <span title="Seeding" class="hasicon" style="$:icon_css('drive-upload')">
             $state['Seeding']&nbsp;</span>
         <span title="Paused" class="hasicon" style="$:icon_css('control-pause')">
             $state['Paused']&nbsp;</span>

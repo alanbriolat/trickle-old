@@ -59,8 +59,8 @@ def icon_css(i):
 
 @register
 def status_icon_css(status):
-    ICONS = {'Downloading': 'arrow-in',
-             'Seeding': 'arrow-out',
+    ICONS = {'Downloading': 'drive-download',
+             'Seeding': 'drive-upload',
              'Paused': 'control-pause',
              'Queued': 'ui-paginator',
              'Checking': 'arrow-circle-135',
