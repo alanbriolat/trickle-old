@@ -1,6 +1,4 @@
 import sys
-import pprint
-pp = pprint.PrettyPrinter(indent=2)
 
 import web
 from web import form
@@ -36,7 +34,6 @@ class index:
         status = client.web.update_ui(TORRENT_KEYS, {})
         sort_order = SORT_SCHEMES.get(web.ctx.query[1:], SORT_SCHEMES['added_desc'])
         torrents = sort_torrents(status['torrents'].values(), sort_order)
-        #pp.pprint(status)
         return render.index(status, torrents)
 
 
@@ -44,9 +41,7 @@ class torrentinfo:
     def GET(self, torrentid):
         client.keepalive()
         info = client.web.get_torrent_status(torrentid, TORRENT_KEYS)
-        print info
         files = client.web.get_torrent_files(torrentid)
-        print files
         return render.torrentinfo(info, files)
 
 
@@ -62,5 +57,6 @@ if __name__ == '__main__':
 
     client = DelugeClient(args.host, args.port, args.password)
 
+    # Don't let web.py have options it won't understand...
     sys.argv[1:] = []
     app.run()
